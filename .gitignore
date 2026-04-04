@@ -1,6 +1,7 @@
 __pycache__/
 *.pyc
-venv/
+loan_env/
 .env
 .DS_Store
 model/*.pkl
+data/
