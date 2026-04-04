@@ -12,3 +12,4 @@ This project predicts whether a loan application will be approved or rejected us
 - Matplotlib
 - Seaborn
 - Scikit-learn
+- Streamlit
