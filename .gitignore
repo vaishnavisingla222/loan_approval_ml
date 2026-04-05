@@ -3,4 +3,3 @@ __pycache__/
 loan_env/
 .env
 .DS_Store
-data/
