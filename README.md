@@ -101,20 +101,6 @@ streamlit run app.py
 
 ---
 
-## 📂 Project Structure
-
-```
-loan_approval_ml/
-│
-├── model/
-├── notebooks/
-├── app.py
-├── requirements.txt
-└── README.md
-```
-
----
-
 ## 🎯 Future Improvements
 
 - Deploy app online 🌍
