@@ -24,7 +24,6 @@ with col1:
 
 with col2:
     selfEmployed = st.selectbox("Self Employed", ["Yes", "No"])
-    # loanTerm = st.number_input("Loan Term (months)", min_value=0)
 
 st.divider()
 
