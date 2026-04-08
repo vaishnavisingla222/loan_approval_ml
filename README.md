@@ -1,9 +1,11 @@
 # 🏦 Loan Approval Prediction System
 
+This project was built as part of learning, machine learning and deploying models using Streamlit.
+
 ## 🧠 Problem Statement
 
-Banks receive thousands of loan applications. Evaluating them manually is time-consuming and error-prone.
-This project uses Machine Learning to predict whether a loan will be **Approved or Rejected** based on applicant details.
+Banks receive large number of loan applications, and checking them manually takes a lot of time and is error prone.
+In this project, I built a uses Machine Learning model to predict whether a loan will be **Approved or Rejected** based on applicant details.
 
 ---
 
@@ -19,7 +21,7 @@ This project uses Machine Learning to predict whether a loan will be **Approved 
 
 ## ⚙️ Tech Stack
 
-- Python 🐍
+- Python
 - Pandas, NumPy
 - Scikit-learn
 - Matplotlib / Seaborn
@@ -29,11 +31,11 @@ This project uses Machine Learning to predict whether a loan will be **Approved 
 
 ## 📊 Dataset
 
-The dataset contains financial and demographic details of loan applicants:
+The dataset contains financial and personal details of loan applicants:
 
-- Dependents
+- Number of dependents
 - Education
-- Self-employed
+- Self-employed or not
 - Income
 - Loan amount
 - Loan term
@@ -44,22 +46,21 @@ The dataset contains financial and demographic details of loan applicants:
 
 ## 🔄 Project Workflow
 
-1. Data Cleaning
-2. Exploratory Data Analysis
-3. Feature Encoding & Scaling
-4. Model Training
-5. Model Comparison
-6. Final Model Selection
-7. Model Saving
-8. Streamlit App Development
+1. Loaded and understood raw data
+2. Data cleaning
+3. Exploratory Data Analysis
+4. Feature Encoding & Scaling
+5. Model Training & Comparison
+6. Final Model Selection and Saving
+7. Built Streamlit website
 
 ---
 
-## 🤖 Models Used
+## 🤖 Models Compared
 
 - Logistic Regression
 - Decision Tree
-- Random Forest ✅ (Final Model)
+- Random Forest (Final Model used)
 
 ---
 
@@ -71,9 +72,9 @@ The dataset contains financial and demographic details of loan applicants:
 
 ---
 
-## 🖥️ Run Locally
+## 🖥️ How to Run This Project
 
-### Clone repo
+### Clone repository
 
 ```bash
 git clone https://github.com/vaishnavisingla222/loan_approval_ml.git
@@ -104,8 +105,8 @@ streamlit run app.py
 ## 🎯 Future Improvements
 
 - Deploy app online 🌍
-- Add database integration
-- Improve UI/UX
+- Add database integration for storing user inputs
+- Improve UI/UX of the Streamlit app
 
 ---
 

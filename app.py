@@ -11,7 +11,7 @@ st.set_page_config(page_title="Loan Approval App", layout="centered")
 
 # Title
 st.title("Loan Approval Prediction System")
-st.markdown("### Check whether your loan will be approved or rejected based on your financial and personal details.")
+st.markdown("#### Check whether your loan will be approved or rejected based on your financial and personal details.")
 
 st.divider()
 
@@ -93,7 +93,7 @@ if st.button("Predict Loan Status"):
 
     inputScaled = scaler.transform(input_data)
     prediction = model.predict(inputScaled)[0]
-    
+
     chances = model.predict_proba(inputScaled)[0]
     if prediction == 1:
         probability = chances[1]
