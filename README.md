@@ -1,9 +1,10 @@
 # 🏦 Loan Approval Prediction System
 This project was built as part of learning, machine learning and deploying models using Streamlit.
 
-## 🧠 Problem Statement
+## 🧠 Problem Statement & Solution
 
 Banks receive large number of loan applications, and checking them manually takes a lot of time and is error prone.
+
 In this project, I built a Supervised Machine Learning model to predict whether a loan will be **Approved or Rejected** based on applicant details.
 
 ---
