@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
 import pickle
 
 # Load model files
@@ -20,10 +21,10 @@ st.subheader("Applicant Details")
 col1, col2 = st.columns(2)
 with col1:
     dependent = st.number_input("Dependents", min_value=0, step=1)
-    education = st.selectbox("Education", ["Graduate", "Not Graduate"])
+    education = st.selectbox("Education", ["Select","Graduate", "Not Graduate"])
 
 with col2:
-    selfEmployed = st.selectbox("Self Employed", ["Yes", "No"])
+    selfEmployed = st.selectbox("Self Employed", ["Select", "Yes", "No"])
 
 st.divider()
 
@@ -70,42 +71,83 @@ st.info(f" CIBIL Category: {category}")
 
 st.divider()
 
-# Preprocess categorical inputs
-if education == "Graduate":
-    education = 1 
-else:
-    education = 0
-
-if selfEmployed == "Yes":
-    selfEmployed = 1
-else:
-    selfEmployed = 0
-
 # Prediction Button
 if st.button("Predict Loan Status"):
 
-    input_data = pd.DataFrame([[
-        dependent, education, selfEmployed,
-        income,residentialVal,commercialVal,luxuryVal, bankVal,
-        loanAmt, loanTerm,
-        cibil
-    ]], columns=features)
+    # Validation
+    if education == "Select" or selfEmployed == "Select":
+        st.warning("Please fill all required fields")
 
-    inputScaled = scaler.transform(input_data)
-    prediction = model.predict(inputScaled)[0]
-
-    chances = model.predict_proba(inputScaled)[0]
-    if prediction == 1:
-        probability = chances[1]
     else:
-        probability = chances[0]
+        # Encode categorical inputs
+        educationVal = 1 if education == "Graduate" else 0
+        selfEmployedVal= 1 if selfEmployed == "Yes" else 0
 
-    st.divider()
+        input_data = pd.DataFrame([[
+            dependent, educationVal, selfEmployedVal,
+            income, residentialVal, commercialVal, luxuryVal, bankVal,
+            loanAmt, loanTerm,
+            cibil
+        ]], columns=features)
 
-    # Results
-    if prediction == 1:
-        st.success(f"Congratulations! Loan can be Approved ({probability*100:.2f}% confidence)")
-        st.markdown("Strong financial profile and credit score")
-    else:
-        st.error(f"Sorry, your loan can be rejected ({probability*100:.2f}% confidence)")
-        st.markdown("Kindly improve CIBIL score or income to increase chances")
+        inputScaled = scaler.transform(input_data)
+        prediction = model.predict(inputScaled)[0]
+        chances = model.predict_proba(inputScaled)[0]
+
+        probability = chances[1] if prediction == 1 else chances[0]
+
+        st.divider()
+
+        # Results
+        if prediction == 1:
+            st.success(f"Congratulations! Loan can be Approved ({probability*100:.2f}% confidence)")
+            st.markdown("Strong financial profile and credit score detected ")
+
+        else:
+            st.error(f"Sorry, your loan can be rejected ({probability*100:.2f}% confidence)")
+            st.markdown("Kindly improve CIBIL score or income to increase chances of approval")
+        
+
+        st.divider()
+
+        st.subheader("Financial Analysis")
+
+        # Probability Gauge
+        st.markdown("### Loan Approval Probability")
+        st.progress(int(probability * 100))
+        st.metric(
+            label="Approval Confidence",
+            value=f"{probability*100:.2f}%"
+        )
+
+        st.divider()
+
+        # Asset Distribution Graph
+        st.markdown("### Applicant Asset Distribution")
+        asset_data = pd.DataFrame({
+            "Assets": [ "Residential","Commercial","Luxury","Bank"],
+            "Value": [residentialVal,commercialVal,luxuryVal,bankVal]
+        })
+        fig, ax = plt.subplots()
+        ax.bar(
+            asset_data["Assets"],
+            asset_data["Value"]
+        )
+        ax.set_title("Applicant Asset Distribution")
+        st.pyplot(fig)
+
+        st.divider()
+
+        # Income vs Loan Graph
+        st.markdown("### Income vs Loan Amount")
+        comparison = pd.DataFrame({
+            "Category": ["Income", "Loan Amount"],
+            "Amount": [income, loanAmt]
+        })
+        fig2, ax2 = plt.subplots()
+        ax2.bar(
+            comparison["Category"],
+            comparison["Amount"]
+        )
+        ax2.set_title("Income vs Loan Amount")
+        st.pyplot(fig2)
