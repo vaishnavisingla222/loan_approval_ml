@@ -7,7 +7,7 @@ import pickle
 model = pickle.load(open("model/loan_model.pkl", "rb"))
 scaler = pickle.load(open("model/scaler.pkl", "rb"))
 features = pickle.load(open("model/features.pkl", "rb"))
-
+print(features)
 st.set_page_config(page_title="Loan Approval Prediction Dashboard", layout="centered")
 
 # Title
@@ -84,10 +84,9 @@ if st.button("Predict Loan Status"):
         selfEmployedVal= 1 if selfEmployed == "Yes" else 0
 
         input_data = pd.DataFrame([[
-            dependent, educationVal, selfEmployedVal,
-            income, residentialVal, commercialVal, luxuryVal, bankVal,
-            loanAmt, loanTerm,
-            cibil
+            dependent, educationVal, selfEmployedVal, 
+            income, loanAmt, loanTerm, cibil,
+            residentialVal, commercialVal, luxuryVal, bankVal
         ]], columns=features)
 
         inputScaled = scaler.transform(input_data)
