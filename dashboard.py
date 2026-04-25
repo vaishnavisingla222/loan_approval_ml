@@ -8,7 +8,7 @@ model = pickle.load(open("model/loan_model.pkl", "rb"))
 scaler = pickle.load(open("model/scaler.pkl", "rb"))
 features = pickle.load(open("model/features.pkl", "rb"))
 
-st.set_page_config(page_title="Loan Approval App", layout="centered")
+st.set_page_config(page_title="Loan Approval Prediction Dashboard", layout="centered")
 
 # Title
 st.title("Loan Approval Prediction System")
