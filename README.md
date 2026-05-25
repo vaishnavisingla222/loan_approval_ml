@@ -35,8 +35,7 @@ This project uses Machine Learning to automate and improve the loan approval pre
 
 # 📊 Dataset Information
 
-Source: https://www.kaggle.com/datasets/architsharma01/loan-approval-prediction-dataset?utm_source=chatgpt.com
-
+Source: https://www.kaggle.com/datasets/vishavgupta01/loan-approval
 The dataset contains applicant financial and personal information including:
 
 | Feature                |
