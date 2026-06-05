@@ -51,7 +51,7 @@ h1, h2, h3 {
 """, unsafe_allow_html=True)
 
 # Load model and scaler
-model = pickle.load(open("model/loan_model.pkl", "rb"))
+model = pickle.load(open("model/loan_model.pkl", "wb"))
 scaler = pickle.load(open("model/scaler.pkl", "rb"))
 features = pickle.load(open("model/features.pkl", "rb"))
 
