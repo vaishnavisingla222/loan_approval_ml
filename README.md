@@ -79,13 +79,13 @@ Streamlit Dashboard Deployment
 
 # 🤖 Models Compared
 
-| Model | Accuracy |
-|--------|----------|
-| Logistic Regression | 90.52% |
-| Decision Tree | 97.78% |
-| Random Forest | 97.78% |
-| Gradient Boosting | 97.78% |
-| XGBoost | 97.54% |
+| Model | Accuracy | Precision | Recall | F1-Score |
+|---------|---------:|---------:|---------:|---------:|
+| Logistic Regression | 90.52% | 92.05% | 92.91% | 92.48% |
+| Decision Tree | 97.78% | 98.14% | 98.32% | 98.23% |
+| Random Forest | 97.78% | 97.78% | 98.69% | **98.24%** 🏆 |
+| Gradient Boosting | 97.78% | 97.96% | 98.51% | 98.23% |
+| XGBoost | 97.54% | 97.60% | 98.51% | 98.05% |
 
 ### Selected Model
 ✅ Random Forest was selected as the final deployment model due to its highest overall performance and balanced precision, recall, and F1-score.
