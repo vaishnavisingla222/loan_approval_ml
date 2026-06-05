@@ -79,16 +79,6 @@ Streamlit Dashboard Deployment
 
 # 🤖 Models Compared
 
-| Model               | Performance |
-| ------------------- | ----------- |
-| Logistic Regression | Good        |
-| Decision Tree       | Better      |
-| Random Forest       | Best ✅     |
-
----
-
-# 🤖 Models Compared
-
 | Model | Accuracy |
 |--------|----------|
 | Logistic Regression | 90.52% |
