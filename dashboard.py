@@ -209,7 +209,6 @@ m4.metric(
 
 st.divider()
 
-# Predict Button
 if st.button("🔍 Predict Loan Status"):
 
     # Validation
@@ -217,6 +216,7 @@ if st.button("🔍 Predict Loan Status"):
         st.warning("⚠️ Please fill all required fields")
 
     else:
+
         # Encode categorical values
         educationVal = 1 if education == "Graduate" else 0
         selfEmployedVal = 1 if selfEmployed == "Yes" else 0
@@ -247,15 +247,12 @@ if st.button("🔍 Predict Loan Status"):
             prediction = model.predict(inputScaled)[0]
             chances = model.predict_proba(inputScaled)[0]
 
-        probability = (
-            chances[1]
-            if prediction == 1
-            else chances[0]
-        )
+        approval_probability = chances[1]
+        loan_income_ratio = loanAmt / max(income, 1)
 
         st.divider()
 
-        # Results
+        # Prediction Result
         st.subheader("🎯 Prediction Result")
 
         if prediction == 1:
@@ -263,22 +260,29 @@ if st.button("🔍 Predict Loan Status"):
             st.success(
                 f"""
                 ✅ Congratulations!
-                
+
                 Loan is likely to be APPROVED
-                
-                Confidence: {probability*100:.2f}%
+
+                Confidence: {approval_probability*100:.2f}%
                 """
             )
 
-            risk = "🟢 Low Risk Applicant"
+            if loan_income_ratio > 20:
+                risk = "🔴 Approved by model, but financially VERY HIGH RISK"
+
+            elif loan_income_ratio > 10:
+                risk = "🟠 Approved by model, but HIGH RISK"
+
+            else:
+                risk = "🟢 Low Risk Applicant"
 
         else:
 
             st.error(
                 f"""
                 ❌ Loan may be REJECTED
-                
-                Confidence: {probability*100:.2f}%
+
+                Confidence: {(1-approval_probability)*100:.2f}%
                 """
             )
 
@@ -288,30 +292,81 @@ if st.button("🔍 Predict Loan Status"):
 
         st.divider()
 
-        # Confidence Meter
+        # Risk Analysis
+        st.subheader("⚠️ Risk Analysis")
+
+        if loan_income_ratio > 20:
+
+            st.error(
+                f"""
+                Extremely High Risk
+
+                Loan Amount is {loan_income_ratio:.1f}× Annual Income.
+                """
+            )
+
+        elif loan_income_ratio > 10:
+
+            st.warning(
+                f"""
+                High Risk
+
+                Loan Amount is {loan_income_ratio:.1f}× Annual Income.
+                """
+            )
+
+        elif loan_income_ratio > 5:
+
+            st.info(
+                f"""
+                Moderate Risk
+
+                Loan Amount is {loan_income_ratio:.1f}× Annual Income.
+                """
+            )
+
+        else:
+
+            st.success(
+                f"""
+                Healthy Loan-to-Income Ratio
+
+                Ratio: {loan_income_ratio:.1f}×
+                """
+            )
+
+        # Additional Risk Flags
+        if dependent >= 5:
+            st.warning(
+                "👨‍👩‍👧 Large number of dependents may affect repayment capacity."
+            )
+
+        if cibil < 650:
+            st.warning(
+                "📉 Below-average CIBIL score may reduce approval chances."
+            )
+
+        if loanTerm > 60:
+            st.warning(
+                "📅 Long loan tenure may increase repayment burden."
+            )
+
+        st.divider()
+
+        # Approval Probability Meter
         st.subheader("📈 Approval Probability Meter")
 
         figGauge = go.Figure(go.Indicator(
             mode="gauge+number",
-            value=probability * 100,
+            value=approval_probability * 100,
             title={'text': "Approval Probability"},
             gauge={
                 'axis': {'range': [0, 100]},
                 'bar': {'color': "green"},
-
                 'steps': [
-                    {
-                        'range': [0, 40],
-                        'color': "#ff4d4d"
-                    },
-                    {
-                        'range': [40, 70],
-                        'color': "#ffd633"
-                    },
-                    {
-                        'range': [70, 100],
-                        'color': "#66ff66"
-                    }
+                    {'range': [0, 40], 'color': "#ff4d4d"},
+                    {'range': [40, 70], 'color': "#ffd633"},
+                    {'range': [70, 100], 'color': "#66ff66"}
                 ]
             }
         ))
@@ -320,42 +375,6 @@ if st.button("🔍 Predict Loan Status"):
             figGauge,
             use_container_width=True
         )
-
-        st.divider()
-
-        # Recommendations
-        st.subheader("🧠 Smart Recommendations")
-
-        tips = []
-
-        if cibil < 650:
-            tips.append(
-                "Improve your CIBIL score for better approval chances."
-            )
-
-        if income < loanAmt:
-            tips.append(
-                "Your loan amount is high compared to your income."
-            )
-
-        if dependent > 4:
-            tips.append(
-                "Higher dependents may affect repayment capability."
-            )
-
-        if loanTerm > 60:
-            tips.append(
-                "Long loan term may increase financial burden."
-            )
-
-        if len(tips) == 0:
-            st.success(
-                "🎉 Excellent financial profile detected!"
-            )
-
-        else:
-            for tip in tips:
-                st.write("✔️", tip)
 
         st.divider()
 
@@ -369,7 +388,6 @@ if st.button("🔍 Predict Loan Status"):
                 "Luxury",
                 "Bank"
             ],
-
             "Value": [
                 residentialVal,
                 commercialVal,
@@ -397,15 +415,8 @@ if st.button("🔍 Predict Loan Status"):
         st.subheader("💰 Income vs Loan Amount")
 
         comparison = pd.DataFrame({
-            "Category": [
-                "Income",
-                "Loan Amount"
-            ],
-
-            "Amount": [
-                income,
-                loanAmt
-            ]
+            "Category": ["Income", "Loan Amount"],
+            "Amount": [income, loanAmt]
         })
 
         figBar = px.bar(
@@ -439,7 +450,7 @@ if st.button("🔍 Predict Loan Status"):
             f"{healthScore:.2f}/100"
         )
 
-        st.divider()
+st.divider()
 
 # Footer
 st.markdown("---")
