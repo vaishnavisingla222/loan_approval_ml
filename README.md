@@ -87,14 +87,18 @@ Streamlit Dashboard Deployment
 
 ---
 
-# 📈 Model Performance
+# 🤖 Models Compared
 
-| Metric    | Score  |
-| --------- | ------ |
-| Accuracy  | 97.78% |
-| Precision | 97.78% |
-| Recall    | 98.69% |
-| F1-Score  | 98.24% |
+| Model | Accuracy |
+|--------|----------|
+| Logistic Regression | 90.52% |
+| Decision Tree | 97.78% |
+| Random Forest | 97.78% |
+| Gradient Boosting | 97.78% |
+| XGBoost | 97.54% |
+
+### Selected Model
+✅ Random Forest was selected as the final deployment model due to its highest overall performance and balanced precision, recall, and F1-score.
 
 ---
 
@@ -102,7 +106,7 @@ Streamlit Dashboard Deployment
 
 - 📈 Higher CIBIL scores significantly improve approval chances
 - 💰 Higher income and asset values positively influence predictions
-- 🏦 Random Forest outperformed other classification models
+- 🏦 Random Forest achieved the highest overall performance among all evaluated models
 
 ---
 
